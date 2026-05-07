@@ -7,8 +7,8 @@ export function Spinner({ size = 'default' }: SpinnerProps) {
     return <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin shrink-0" />;
   }
   return (
-    <div className="spinner-wrapper">
-      <div className="spinner-track" />
+    <div className="flex justify-center py-12">
+      <div className="w-8 h-8 border-4 border-primary-muted border-t-primary rounded-full animate-spin" />
     </div>
   );
 }
