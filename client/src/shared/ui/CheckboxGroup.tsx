@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 interface CheckboxGroupProps {
   options: string[];
   value: string[];
@@ -8,7 +6,7 @@ interface CheckboxGroupProps {
 }
 
 export function CheckboxGroup({ options, value, onChange, error }: CheckboxGroupProps) {
-  const valueSet = useMemo(() => new Set(value), [value]);
+  const valueSet = new Set(value);
 
   return (
     <div className="space-y-2">
@@ -20,10 +18,10 @@ export function CheckboxGroup({ options, value, onChange, error }: CheckboxGroup
             onChange={() => onChange(option)}
             className="w-4 h-4 accent-primary"
           />
-          <span className="text-sm text-text">{option}</span>
+          <span className="text-text text-sm">{option}</span>
         </label>
       ))}
-      {error && <p className="text-error text-xs mt-1">{error}</p>}
+      {error && <p className="mt-1 text-error text-xs">{error}</p>}
     </div>
   );
 }

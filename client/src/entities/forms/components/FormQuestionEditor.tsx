@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { QuestionType } from '@/app/generated/api.gen';
 import type { DraftOption, DraftQuestion } from '@/entities/forms/hooks/useFormBuilder';
 import { Input } from '@/shared/ui/Input';
@@ -78,7 +77,7 @@ export interface FormQuestionEditorProps {
   onRemoveOption: (id: string, index: number) => void;
 }
 
-export const FormQuestionEditor = memo(function FormQuestionEditor({
+export function FormQuestionEditor({
   question,
   index,
   errors,
@@ -151,4 +150,4 @@ export const FormQuestionEditor = memo(function FormQuestionEditor({
       </div>
     </div>
   );
-});
+}

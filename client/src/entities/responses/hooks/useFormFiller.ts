@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState } from 'react';
 import { useGetFormQuery, useSubmitResponseMutation } from '@/app/api';
 import { QuestionType } from '@/app/generated/api.gen';
 import type { AnswerInput } from '@/app/generated/api.gen';
@@ -15,19 +15,16 @@ export function useFormFiller(formId: string) {
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>('idle');
 
-  const answersRef = useRef(answers);
-  answersRef.current = answers;
-
-  const setAnswer = useCallback((questionId: string, value: string | string[]) => {
+  const setAnswer = (questionId: string, value: string | string[]) => {
     setAnswers((prev) => ({ ...prev, [questionId]: value }));
     setValidationErrors((prev) => {
       const next = { ...prev };
       delete next[questionId];
       return next;
     });
-  }, []);
+  };
 
-  const toggleCheckbox = useCallback((questionId: string, option: string) => {
+  const toggleCheckbox = (questionId: string, option: string) => {
     setAnswers((prev) => {
       const current = (prev[questionId] as string[]) ?? [];
       const next = current.includes(option)
@@ -40,15 +37,15 @@ export function useFormFiller(formId: string) {
       delete next[questionId];
       return next;
     });
-  }, []);
+  };
 
-  const validate = useCallback((): boolean => {
+  const validate = (): boolean => {
     const questions = data?.form?.questions;
     if (!questions) return true;
     const errors: Record<string, string> = {};
     for (const question of questions) {
       if (!question.required) continue;
-      const answer = answersRef.current[question.id];
+      const answer = answers[question.id];
       if (needsMultipleValues(question.type)) {
         if (!answer || (answer as string[]).length === 0)
           errors[question.id] = 'This field is required.';
@@ -58,15 +55,15 @@ export function useFormFiller(formId: string) {
     }
     setValidationErrors(errors);
     return Object.keys(errors).length === 0;
-  }, [data]);
+  };
 
-  const submit = useCallback(async () => {
+  const submit = async () => {
     if (!data?.form) return;
     if (!validate()) return;
 
     setSubmitStatus('idle');
     const answerInputs: AnswerInput[] = data.form.questions.map((question) => {
-      const raw = answersRef.current[question.id];
+      const raw = answers[question.id];
       if (needsMultipleValues(question.type)) {
         return { questionId: question.id, values: (raw as string[]) ?? [] };
       }
@@ -80,7 +77,7 @@ export function useFormFiller(formId: string) {
     } else {
       setSubmitStatus('error');
     }
-  }, [data, validate, submitResponse, formId]);
+  };
 
   return {
     form: data?.form,

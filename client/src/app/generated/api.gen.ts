@@ -1,3 +1,7 @@
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import { api } from '../baseApi';
 class TypedDocumentString<TResult, TVariables> extends String {
   declare readonly __apiType?: TResult;
@@ -9,93 +13,16 @@ class TypedDocumentString<TResult, TVariables> extends String {
   }
   override toString(): string { return super.toString(); }
 }
-export type Maybe<T> = T | null;
-export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
-/** All built-in and custom scalars, mapped to their actual values */
-export type Scalars = {
-  ID: { input: string; output: string; }
-  String: { input: string; output: string; }
-  Boolean: { input: boolean; output: boolean; }
-  Int: { input: number; output: number; }
-  Float: { input: number; output: number; }
-};
-
-export type Answer = {
-  __typename?: 'Answer';
-  question: Question;
-  value?: Maybe<Scalars['String']['output']>;
-  values?: Maybe<Array<Scalars['String']['output']>>;
-};
-
 export type AnswerInput = {
-  questionId: Scalars['ID']['input'];
-  value?: InputMaybe<Scalars['String']['input']>;
-  values?: InputMaybe<Array<Scalars['String']['input']>>;
-};
-
-export type Form = {
-  __typename?: 'Form';
-  createdAt: Scalars['String']['output'];
-  description?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
-  questions: Array<Question>;
-  title: Scalars['String']['output'];
-};
-
-export type Mutation = {
-  __typename?: 'Mutation';
-  createForm: Form;
-  submitResponse: Response;
-};
-
-
-export type MutationCreateFormArgs = {
-  description?: InputMaybe<Scalars['String']['input']>;
-  questions?: InputMaybe<Array<QuestionInput>>;
-  title: Scalars['String']['input'];
-};
-
-
-export type MutationSubmitResponseArgs = {
-  answers: Array<AnswerInput>;
-  formId: Scalars['ID']['input'];
-};
-
-export type Query = {
-  __typename?: 'Query';
-  form?: Maybe<Form>;
-  forms: Array<Form>;
-  responses: Array<Response>;
-};
-
-
-export type QueryFormArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-export type QueryResponsesArgs = {
-  formId: Scalars['ID']['input'];
-};
-
-export type Question = {
-  __typename?: 'Question';
-  id: Scalars['ID']['output'];
-  options?: Maybe<Array<Scalars['String']['output']>>;
-  required: Scalars['Boolean']['output'];
-  text: Scalars['String']['output'];
-  type: QuestionType;
+  questionId: string | number;
+  value?: string | null | undefined;
+  values?: Array<string> | null | undefined;
 };
 
 export type QuestionInput = {
-  options?: InputMaybe<Array<Scalars['String']['input']>>;
-  required?: InputMaybe<Scalars['Boolean']['input']>;
-  text: Scalars['String']['input'];
+  options?: Array<string> | null | undefined;
+  required?: boolean | null | undefined;
+  text: string;
   type: QuestionType;
 };
 
@@ -106,57 +33,49 @@ export enum QuestionType {
   Text = 'TEXT'
 }
 
-export type Response = {
-  __typename?: 'Response';
-  answers: Array<Answer>;
-  formId: Scalars['ID']['output'];
-  id: Scalars['ID']['output'];
-  submittedAt: Scalars['String']['output'];
-};
+export type QuestionFieldsFragment = { id: string, text: string, type: QuestionType, required: boolean, options: Array<string> | null };
 
-export type QuestionFieldsFragment = { __typename?: 'Question', id: string, text: string, type: QuestionType, required: boolean, options?: Array<string> | null };
-
-export type FormFieldsFragment = { __typename?: 'Form', id: string, title: string, description?: string | null, createdAt: string, questions: Array<{ __typename?: 'Question', id: string, text: string, type: QuestionType, required: boolean, options?: Array<string> | null }> };
+export type FormFieldsFragment = { id: string, title: string, description: string | null, createdAt: string, questions: Array<{ id: string, text: string, type: QuestionType, required: boolean, options: Array<string> | null }> };
 
 export type GetFormsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetFormsQuery = { __typename?: 'Query', forms: Array<{ __typename?: 'Form', id: string, title: string, description?: string | null, createdAt: string }> };
+export type GetFormsQuery = { forms: Array<{ id: string, title: string, description: string | null, createdAt: string }> };
 
 export type GetFormQueryVariables = Exact<{
-  id: Scalars['ID']['input'];
+  id: string | number;
 }>;
 
 
-export type GetFormQuery = { __typename?: 'Query', form?: { __typename?: 'Form', id: string, title: string, description?: string | null, createdAt: string, questions: Array<{ __typename?: 'Question', id: string, text: string, type: QuestionType, required: boolean, options?: Array<string> | null }> } | null };
+export type GetFormQuery = { form: { id: string, title: string, description: string | null, createdAt: string, questions: Array<{ id: string, text: string, type: QuestionType, required: boolean, options: Array<string> | null }> } | null };
 
 export type CreateFormMutationVariables = Exact<{
-  title: Scalars['String']['input'];
-  description?: InputMaybe<Scalars['String']['input']>;
-  questions?: InputMaybe<Array<QuestionInput> | QuestionInput>;
+  title: string;
+  description?: string | null | undefined;
+  questions?: Array<QuestionInput> | QuestionInput | null | undefined;
 }>;
 
 
-export type CreateFormMutation = { __typename?: 'Mutation', createForm: { __typename?: 'Form', id: string, title: string, description?: string | null, createdAt: string, questions: Array<{ __typename?: 'Question', id: string, text: string, type: QuestionType, required: boolean, options?: Array<string> | null }> } };
+export type CreateFormMutation = { createForm: { id: string, title: string, description: string | null, createdAt: string, questions: Array<{ id: string, text: string, type: QuestionType, required: boolean, options: Array<string> | null }> } };
 
-export type AnswerFieldsFragment = { __typename?: 'Answer', value?: string | null, values?: Array<string> | null, question: { __typename?: 'Question', id: string, text: string, type: QuestionType, required: boolean, options?: Array<string> | null } };
+export type AnswerFieldsFragment = { value: string | null, values: Array<string> | null, question: { id: string, text: string, type: QuestionType, required: boolean, options: Array<string> | null } };
 
-export type ResponseFieldsFragment = { __typename?: 'Response', id: string, formId: string, submittedAt: string, answers: Array<{ __typename?: 'Answer', value?: string | null, values?: Array<string> | null, question: { __typename?: 'Question', id: string, text: string, type: QuestionType, required: boolean, options?: Array<string> | null } }> };
+export type ResponseFieldsFragment = { id: string, formId: string, submittedAt: string, answers: Array<{ value: string | null, values: Array<string> | null, question: { id: string, text: string, type: QuestionType, required: boolean, options: Array<string> | null } }> };
 
 export type GetResponsesQueryVariables = Exact<{
-  formId: Scalars['ID']['input'];
+  formId: string | number;
 }>;
 
 
-export type GetResponsesQuery = { __typename?: 'Query', responses: Array<{ __typename?: 'Response', id: string, formId: string, submittedAt: string, answers: Array<{ __typename?: 'Answer', value?: string | null, values?: Array<string> | null, question: { __typename?: 'Question', id: string, text: string, type: QuestionType, required: boolean, options?: Array<string> | null } }> }> };
+export type GetResponsesQuery = { responses: Array<{ id: string, formId: string, submittedAt: string, answers: Array<{ value: string | null, values: Array<string> | null, question: { id: string, text: string, type: QuestionType, required: boolean, options: Array<string> | null } }> }> };
 
 export type SubmitResponseMutationVariables = Exact<{
-  formId: Scalars['ID']['input'];
+  formId: string | number;
   answers: Array<AnswerInput> | AnswerInput;
 }>;
 
 
-export type SubmitResponseMutation = { __typename?: 'Mutation', submitResponse: { __typename?: 'Response', id: string, formId: string, submittedAt: string, answers: Array<{ __typename?: 'Answer', value?: string | null, values?: Array<string> | null, question: { __typename?: 'Question', id: string, text: string, type: QuestionType, required: boolean, options?: Array<string> | null } }> } };
+export type SubmitResponseMutation = { submitResponse: { id: string, formId: string, submittedAt: string, answers: Array<{ value: string | null, values: Array<string> | null, question: { id: string, text: string, type: QuestionType, required: boolean, options: Array<string> | null } }> } };
 
 export const QuestionFieldsFragmentDoc = new TypedDocumentString(`
     fragment QuestionFields on Question {

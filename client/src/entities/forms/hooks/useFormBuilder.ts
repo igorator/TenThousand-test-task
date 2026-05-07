@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useCreateFormMutation } from '@/app/api';
 import { QuestionType } from '@/app/generated/api.gen';
@@ -27,7 +27,7 @@ export function useFormBuilder() {
   const [questions, setQuestions] = useState<DraftQuestion[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const addQuestion = useCallback((type: QuestionType) => {
+  const addQuestion = (type: QuestionType) => {
     setQuestions((prev) => [
       ...prev,
       {
@@ -38,9 +38,9 @@ export function useFormBuilder() {
         options: needsOptions(type) ? makeDefaultOptions() : [],
       },
     ]);
-  }, []);
+  };
 
-  const updateQuestion = useCallback((id: string, patch: Partial<Omit<DraftQuestion, 'id'>>) => {
+  const updateQuestion = (id: string, patch: Partial<Omit<DraftQuestion, 'id'>>) => {
     setQuestions((prev) =>
       prev.map((question) => {
         if (question.id !== id) return question;
@@ -51,13 +51,13 @@ export function useFormBuilder() {
         return updated;
       })
     );
-  }, []);
+  };
 
-  const removeQuestion = useCallback((id: string) => {
+  const removeQuestion = (id: string) => {
     setQuestions((prev) => prev.filter((question) => question.id !== id));
-  }, []);
+  };
 
-  const addOption = useCallback((id: string) => {
+  const addOption = (id: string) => {
     setQuestions((prev) =>
       prev.map((question) => {
         if (question.id !== id) return question;
@@ -68,9 +68,9 @@ export function useFormBuilder() {
         };
       })
     );
-  }, []);
+  };
 
-  const updateOption = useCallback((id: string, index: number, value: string) => {
+  const updateOption = (id: string, index: number, value: string) => {
     setQuestions((prev) =>
       prev.map((question) => {
         if (question.id !== id) return question;
@@ -78,9 +78,9 @@ export function useFormBuilder() {
         return { ...question, options };
       })
     );
-  }, []);
+  };
 
-  const removeOption = useCallback((id: string, index: number) => {
+  const removeOption = (id: string, index: number) => {
     setQuestions((prev) =>
       prev.map((question) => {
         if (question.id !== id) return question;
@@ -90,9 +90,9 @@ export function useFormBuilder() {
         };
       })
     );
-  }, []);
+  };
 
-  const validate = useCallback((): boolean => {
+  const validate = (): boolean => {
     const newErrors: Record<string, string> = {};
     if (!title.trim()) newErrors.title = 'Title is required.';
     if (questions.length === 0) newErrors._questions = 'Add at least one question.';
@@ -103,9 +103,9 @@ export function useFormBuilder() {
     });
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  }, [title, questions]);
+  };
 
-  const submit = useCallback(async () => {
+  const submit = async () => {
     if (!validate()) return;
 
     const questionInputs: QuestionInput[] = questions.map(({ text, type, required, options }) => ({
@@ -126,7 +126,7 @@ export function useFormBuilder() {
     } else {
       setErrors((prev) => ({ ...prev, _form: 'Failed to save form. Please try again.' }));
     }
-  }, [validate, title, description, questions, createForm, navigate]);
+  };
 
   return {
     title,

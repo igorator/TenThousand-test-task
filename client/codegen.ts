@@ -20,13 +20,13 @@ const config: CodegenConfig = {
     'src/app/generated/api.gen.ts': {
       plugins: [
         { add: { content: TYPED_DOCUMENT_STRING_DEF } },
-        'typescript',
         'typescript-operations',
         'typescript-rtk-query',
       ],
       config: {
         importBaseApiFrom: '../baseApi',
         exportHooks: true,
+        enumType: 'native',
       },
     },
   },

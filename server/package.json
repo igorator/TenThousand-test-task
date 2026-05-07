@@ -13,9 +13,6 @@
     "graphql": "^16.10.0"
   },
   "devDependencies": {
-    "@types/node": "^22.13.5",
-    "prettier": "^3.8.3",
-    "tsx": "^4.19.3",
-    "typescript": "^5.7.3"
+    "tsx": "^4.19.3"
   }
 }
