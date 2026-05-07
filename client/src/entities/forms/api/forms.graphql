@@ -1,0 +1,38 @@
+fragment QuestionFields on Question {
+  id
+  text
+  type
+  required
+  options
+}
+
+fragment FormFields on Form {
+  id
+  title
+  description
+  createdAt
+  questions {
+    ...QuestionFields
+  }
+}
+
+query GetForms {
+  forms {
+    id
+    title
+    description
+    createdAt
+  }
+}
+
+query GetForm($id: ID!) {
+  form(id: $id) {
+    ...FormFields
+  }
+}
+
+mutation CreateForm($title: String!, $description: String, $questions: [QuestionInput!]) {
+  createForm(title: $title, description: $description, questions: $questions) {
+    ...FormFields
+  }
+}

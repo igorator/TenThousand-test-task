@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Poppins', sans-serif;
+  --color-primary: #0595d2;
+  --color-primary-dark: #0479b5;
+  --color-primary-light: #0d3a50;
+  --color-primary-muted: #0c2e42;
+
+  --color-bg: #0f0f0f;
+  --color-surface: #1a1a1a;
+  --color-surface-raised: #222222;
+  --color-border: #2e2e2e;
+  --color-text: #f0f0f0;
+  --color-text-muted: #8a8a8a;
+  --color-placeholder: #4a4a4a;
+
+  --color-required: #f87171;
+  --color-error: #f87171;
+  --color-error-border: #b91c1c;
+  --color-error-bg: #450a0a;
+  --color-error-bg-border: #991b1b;
+}
+
+@layer components {
+  .card {
+    @apply bg-surface rounded-xl border border-border p-5;
+  }
+
+  .card-dashed {
+    @apply bg-surface rounded-xl border border-dashed border-border p-4;
+  }
+
+  .layout-inner {
+    @apply max-w-4xl mx-auto px-4;
+  }
+
+  .page-container {
+    @apply max-w-2xl mx-auto;
+  }
+
+  .page-header {
+    @apply flex items-center gap-3 mb-6;
+  }
+
+  .back-link {
+    @apply text-text-muted hover:text-text transition-colors text-sm;
+  }
+
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  .bg-gradient-primary {
+    background: linear-gradient(90deg, rgb(2, 156, 220), rgb(35, 39, 76));
+  }
+
+  .spinner-wrapper {
+    @apply flex justify-center py-12;
+  }
+
+  .spinner-track {
+    @apply w-8 h-8 border-4 border-primary-muted border-t-primary rounded-full animate-spin;
+  }
+}
+
+::placeholder {
+  color: var(--color-placeholder);
+}
+
+select option {
+  background-color: var(--color-surface-raised);
+  color: var(--color-text);
+  padding-block: 6px;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) var(--color-surface);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+html {
+  overflow-y: scroll;
+}
+
+@layer base {
+  button, a {
+    cursor: pointer;
+  }
+
+  * {
+    text-wrap: pretty;
+    overflow-wrap: break-word;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+  }
+}

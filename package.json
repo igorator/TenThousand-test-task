@@ -1,0 +1,20 @@
+{
+  "name": "google-forms-lite",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev": "concurrently --names \"server,client\" --prefix-colors \"cyan,magenta\" \"npm run dev -w server\" \"npm run dev -w client\"",
+    "build": "npm run build -w server && npm run build -w client",
+    "codegen": "npm run codegen -w client",
+    "format": "prettier --write \"client/src/**/*.{ts,tsx}\" \"server/src/**/*.ts\"",
+    "format:check": "prettier --check \"client/src/**/*.{ts,tsx}\" \"server/src/**/*.ts\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "prettier": "^3.5.3",
+    "typescript": "^5.7.3"
+  }
+}
