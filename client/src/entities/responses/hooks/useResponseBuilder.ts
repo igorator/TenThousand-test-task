@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import { useGetFormQuery, useSubmitResponseMutation } from '@/app/api';
-import { QuestionType } from '@/entities/forms/config/questionTypes';
 import type { AnswerInput } from '@/app/gql/graphql';
+import { needsMultipleValues, validateAnswers } from './validation';
 
 type SubmitStatus = 'idle' | 'success' | 'error';
-
-const needsMultipleValues = (type: QuestionType) => type === QuestionType.Checkbox;
 
 export function useResponseBuilder(formId: string) {
   const { data, isLoading, isError } = useGetFormQuery({ id: formId });
@@ -42,17 +40,7 @@ export function useResponseBuilder(formId: string) {
   const validate = (): Record<string, string> => {
     const questions = data?.form?.questions;
     if (!questions) return {};
-    const errors: Record<string, string> = {};
-    for (const question of questions) {
-      if (!question.required) continue;
-      const answer = answers[question.id];
-      if (needsMultipleValues(question.type)) {
-        if (!answer || (answer as string[]).length === 0)
-          errors[question.id] = 'This field is required.';
-      } else {
-        if (!answer || !(answer as string).trim()) errors[question.id] = 'This field is required.';
-      }
-    }
+    const errors = validateAnswers(questions, answers);
     setValidationErrors(errors);
     return errors;
   };

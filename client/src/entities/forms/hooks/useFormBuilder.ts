@@ -1,19 +1,15 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useCreateFormMutation } from '@/app/api';
+import type { QuestionInput } from '@/app/gql/graphql';
 import { QuestionType } from '@/entities/forms/config/questionTypes';
-import type { QuestionFieldsFragment, QuestionInput } from '@/app/gql/graphql';
 import { ROUTES } from '@/shared/config/routes';
+import { needsOptions, validateFormDraft } from './validation';
+import type { DraftQuestion } from './validation';
 
-export type DraftOption = { id: string; value: string };
-export type DraftQuestion = Omit<QuestionFieldsFragment, 'options'> & { options: DraftOption[] };
+export type { DraftOption, DraftQuestion } from './validation';
 
-const MIN_OPTIONS_COUNT = 2;
-
-const needsOptions = (type: QuestionType) =>
-  type === QuestionType.MultipleChoice || type === QuestionType.Checkbox;
-
-const makeDefaultOptions = (): DraftOption[] => [
+const makeDefaultOptions = () => [
   { id: crypto.randomUUID(), value: 'Option 1' },
   { id: crypto.randomUUID(), value: 'Option 2' },
 ];
@@ -93,16 +89,9 @@ export function useFormBuilder() {
   };
 
   const validate = (): Record<string, string> => {
-    const newErrors: Record<string, string> = {};
-    if (!title.trim()) newErrors.title = 'Title is required.';
-    if (questions.length === 0) newErrors._questions = 'Add at least one question.';
-    questions.forEach((question) => {
-      if (!question.text.trim()) newErrors[question.id] = 'Question text is required.';
-      if (needsOptions(question.type) && question.options.length < MIN_OPTIONS_COUNT)
-        newErrors[`${question.id}-options`] = `At least ${MIN_OPTIONS_COUNT} options required.`;
-    });
-    setErrors(newErrors);
-    return newErrors;
+    const errors = validateFormDraft(title, questions);
+    setErrors(errors);
+    return errors;
   };
 
   const submit = async () => {
