@@ -5,6 +5,8 @@
 - Node.js 20+
 - npm 10+
 
+---
+
 ## Getting Started
 
 **1. Install dependencies**
@@ -26,6 +28,20 @@ npm run dev
 
 Open **http://localhost:3000** in your browser.
 
+---
+
+## GraphQL Codegen
+
+TypeScript types and typed GraphQL documents are auto-generated from the schema using [`@graphql-codegen/client-preset`](https://the-guild.dev/graphql/codegen/plugins/presets/preset-client). The generated files (`client/src/app/gql/`) are committed to the repo, so codegen is **not required** to run the project.
+
+Run it manually after changing the schema or any `.graphql` file:
+
+```bash
+npm run codegen
+```
+
+---
+
 ## Running Tests
 
 ```bash
@@ -40,20 +56,13 @@ npm run test:ci
 
 Tests live in `client/src/` next to the code they cover. The suite uses [Vitest](https://vitest.dev/) + `@testing-library/react`.
 
-| File | Hook | What's tested |
-| ---- | ---- | ------------- |
-| `entities/forms/hooks/useFormBuilder.test.ts` | `useFormBuilder` | initial state, adding/removing questions, updating the form title |
-| `entities/responses/hooks/useResponseBuilder.test.ts` | `useResponseBuilder` | initial state, text answers, checkbox toggle, validation error clearing, submit success/error status |
+| File | What's tested |
+| ---- | ------------- |
+| `entities/forms/hooks/useFormBuilder/useFormBuilder.test.ts` | initial state, adding/removing questions, updating the form title |
+| `entities/responses/hooks/useResponseBuilder/useResponseBuilder.test.ts` | initial state, text answers, checkbox toggle, validation error clearing, submit success/error status |
+| `entities/responses/components/QuestionAnswerField/QuestionAnswerField.test.tsx` | renders correct input per question type (text, date, radio, checkbox), required indicator, error message, onTextChange callback |
 
-## GraphQL Codegen
-
-TypeScript types and typed GraphQL documents are auto-generated from the schema using [`@graphql-codegen/client-preset`](https://the-guild.dev/graphql/codegen/plugins/presets/preset-client). The generated files (`client/src/app/gql/`) are committed to the repo, so codegen is **not required** to run the project.
-
-Run it manually after changing the schema or any `.graphql` file:
-
-```bash
-npm run codegen
-```
+---
 
 ## Notes
 
