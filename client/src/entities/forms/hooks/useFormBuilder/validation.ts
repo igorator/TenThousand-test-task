@@ -5,6 +5,8 @@ export type DraftOption = { id: string; value: string };
 export type DraftQuestion = Omit<QuestionFieldsFragment, 'options'> & { options: DraftOption[] };
 
 export const MIN_OPTIONS_COUNT = 2;
+export const MAX_TITLE_LENGTH = 100;
+export const MAX_QUESTION_TEXT_LENGTH = 300;
 
 export const needsOptions = (type: QuestionType) =>
   type === QuestionType.MultipleChoice || type === QuestionType.Checkbox;
@@ -15,6 +17,11 @@ const FORM_RULES: Array<{
   message: string;
 }> = [
   { field: 'title', test: (title) => !title.trim(), message: 'Title is required.' },
+  {
+    field: 'title',
+    test: (title) => title.trim().length > MAX_TITLE_LENGTH,
+    message: `Title must be ${MAX_TITLE_LENGTH} characters or less.`,
+  },
   {
     field: '_questions',
     test: (_, questions) => questions.length === 0,
@@ -31,6 +38,11 @@ const QUESTION_RULES: Array<{
     key: (question) => question.id,
     test: (question) => !question.text.trim(),
     message: 'Question text is required.',
+  },
+  {
+    key: (question) => question.id,
+    test: (question) => question.text.trim().length > MAX_QUESTION_TEXT_LENGTH,
+    message: `Question must be ${MAX_QUESTION_TEXT_LENGTH} characters or less.`,
   },
   {
     key: (question) => `${question.id}-options`,
