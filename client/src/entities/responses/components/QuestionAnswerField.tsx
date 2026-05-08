@@ -16,7 +16,7 @@ interface RendererProps {
   onCheckboxToggle: (questionId: string, option: string) => void;
 }
 
-const ANSWER_RENDERERS: Record<QuestionType, ComponentType<RendererProps>> = {
+const QUESTION_INPUT_BY_TYPE: Record<QuestionType, ComponentType<RendererProps>> = {
   [QuestionType.Text]: ({ id, answer, error, onTextChange }) => (
     <Input
       type="text"
@@ -53,7 +53,7 @@ const ANSWER_RENDERERS: Record<QuestionType, ComponentType<RendererProps>> = {
   ),
 };
 
-interface AnswerInputProps {
+export interface QuestionAnswerFieldProps {
   question: Question;
   answer: string | string[] | undefined;
   error?: string;
@@ -61,15 +61,15 @@ interface AnswerInputProps {
   onCheckboxToggle: (questionId: string, option: string) => void;
 }
 
-export function AnswerInput({
+export function QuestionAnswerField({
   question,
   answer,
   error,
   onTextChange,
   onCheckboxToggle,
-}: AnswerInputProps) {
+}: QuestionAnswerFieldProps) {
   const { id, text, type, required, options } = question;
-  const Renderer = ANSWER_RENDERERS[type];
+  const QuestionInput = QUESTION_INPUT_BY_TYPE[type];
 
   return (
     <div className="card space-y-3">
@@ -77,7 +77,7 @@ export function AnswerInput({
         {text}
         {required && <span className="text-required ml-1">*</span>}
       </p>
-      <Renderer
+      <QuestionInput
         id={id}
         answer={answer}
         options={options}

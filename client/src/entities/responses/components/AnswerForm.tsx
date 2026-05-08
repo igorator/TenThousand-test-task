@@ -1,4 +1,4 @@
-import { AnswerInput } from './AnswerInput';
+import { QuestionAnswerField } from './QuestionAnswerField';
 import type { GetFormQuery } from '@/app/gql/graphql';
 
 type Question = NonNullable<GetFormQuery['form']>['questions'][number];
@@ -28,7 +28,7 @@ export function AnswerForm({
     <div className="space-y-4">
       {questions.map((question) => (
         <div key={question.id} id={`field-${question.id}`}>
-          <AnswerInput
+          <QuestionAnswerField
             question={question}
             answer={answers[question.id]}
             error={validationErrors[question.id]}
