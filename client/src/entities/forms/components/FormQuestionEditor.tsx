@@ -1,4 +1,4 @@
-import { QuestionType } from '@/app/generated/api.gen';
+import { QuestionType } from '@/shared/config/questionTypes';
 import type { DraftOption, DraftQuestion } from '@/entities/forms/hooks/useFormBuilder';
 import { Input } from '@/shared/ui/Input';
 import { Select } from '@/shared/ui/Select';
@@ -59,7 +59,11 @@ function OptionsList({
         </div>
       ))}
       {error && <p className="text-error text-xs">{error}</p>}
-      <Button variant="ghost" onClick={() => onAddOption(questionId)} className="text-sm px-0 hover:text-white">
+      <Button
+        variant="ghost"
+        onClick={() => onAddOption(questionId)}
+        className="text-sm px-0 hover:text-white"
+      >
         + Add option
       </Button>
     </div>

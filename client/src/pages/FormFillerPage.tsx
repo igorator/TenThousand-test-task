@@ -2,7 +2,7 @@ import { Link, useParams } from 'react-router';
 import { Spinner } from '@/shared/components/Spinner';
 import { ErrorMessage } from '@/shared/components/ErrorMessage';
 import { Button } from '@/shared/ui/Button';
-import { useFormFiller } from '@/entities/responses/hooks/useFormFiller';
+import { useResponseBuilder } from '@/entities/responses/hooks/useResponseBuilder';
 import { ResponseSuccess } from '@/entities/responses/components/ResponseSuccess';
 import { AnswerForm } from '@/entities/responses/components/AnswerForm';
 import { ROUTES } from '@/shared/config/routes';
@@ -20,7 +20,7 @@ export function FormFillerPage() {
     setAnswer,
     toggleCheckbox,
     submit,
-  } = useFormFiller(id!);
+  } = useResponseBuilder(id!);
 
   if (isLoading) return <Spinner />;
   if (isError || !form) return <ErrorMessage message="Form not found." />;
@@ -54,7 +54,12 @@ export function FormFillerPage() {
       />
 
       <div className="mt-6 flex justify-end">
-        <Button onClick={submit} isLoading={isSubmitting} loadingText="Submitting…" className="px-6">
+        <Button
+          onClick={submit}
+          isLoading={isSubmitting}
+          loadingText="Submitting…"
+          className="px-6"
+        >
           Submit
         </Button>
       </div>

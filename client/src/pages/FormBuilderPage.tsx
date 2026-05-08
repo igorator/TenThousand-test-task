@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { QuestionType } from '@/app/generated/api.gen';
+import { QuestionType } from '@/shared/config/questionTypes';
 import { FormQuestionEditor } from '@/entities/forms/components/FormQuestionEditor';
 import { Button } from '@/shared/ui/Button';
 import { Input } from '@/shared/ui/Input';
@@ -43,7 +43,7 @@ export function FormBuilderPage() {
 
       <div className="space-y-5">
         <h1 className="text-2xl font-bold text-text">New Form</h1>
-        <div className="card space-y-4">
+        <div id="field-title" className="card space-y-4">
           <Input
             placeholder="Form title *"
             value={title}
@@ -60,22 +60,23 @@ export function FormBuilderPage() {
         </div>
 
         {questions.map((question, index) => (
-          <FormQuestionEditor
-            key={question.id}
-            question={question}
-            index={index}
-            errors={errors}
-            onUpdate={updateQuestion}
-            onRemove={removeQuestion}
-            onAddOption={addOption}
-            onUpdateOption={updateOption}
-            onRemoveOption={removeOption}
-          />
+          <div key={question.id} id={`field-${question.id}`}>
+            <FormQuestionEditor
+              question={question}
+              index={index}
+              errors={errors}
+              onUpdate={updateQuestion}
+              onRemove={removeQuestion}
+              onAddOption={addOption}
+              onUpdateOption={updateOption}
+              onRemoveOption={removeOption}
+            />
+          </div>
         ))}
 
         {errors._questions && <ErrorMessage message={errors._questions} />}
 
-        <div className="card-dashed">
+        <div id="field-_questions" className="card-dashed">
           <p className="text-xs font-semibold text-text-muted uppercase tracking-wide mb-3">
             Add Question
           </p>

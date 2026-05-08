@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useCreateFormMutation } from '@/app/api';
-import { QuestionType } from '@/app/generated/api.gen';
-import type { QuestionFieldsFragment, QuestionInput } from '@/app/generated/api.gen';
+import { QuestionType } from '@/shared/config/questionTypes';
+import type { QuestionFieldsFragment, QuestionInput } from '@/app/gql/graphql';
 import { ROUTES } from '@/shared/config/routes';
 
 export type DraftOption = { id: string; value: string };
@@ -92,7 +92,7 @@ export function useFormBuilder() {
     );
   };
 
-  const validate = (): boolean => {
+  const validate = (): Record<string, string> => {
     const newErrors: Record<string, string> = {};
     if (!title.trim()) newErrors.title = 'Title is required.';
     if (questions.length === 0) newErrors._questions = 'Add at least one question.';
@@ -102,11 +102,20 @@ export function useFormBuilder() {
         newErrors[`${question.id}-options`] = `At least ${MIN_OPTIONS_COUNT} options required.`;
     });
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return newErrors;
   };
 
   const submit = async () => {
-    if (!validate()) return;
+    const newErrors = validate();
+    if (Object.keys(newErrors).length > 0) {
+      const firstKey = Object.keys(newErrors)[0].replace(/-options$/, '');
+      requestAnimationFrame(() => {
+        document
+          .getElementById(`field-${firstKey}`)
+          ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+      return;
+    }
 
     const questionInputs: QuestionInput[] = questions.map(({ text, type, required, options }) => ({
       text,

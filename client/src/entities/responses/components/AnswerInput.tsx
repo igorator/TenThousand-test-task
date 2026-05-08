@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
-import { QuestionType } from '@/app/generated/api.gen';
-import type { GetFormQuery } from '@/app/generated/api.gen';
+import { QuestionType } from '@/shared/config/questionTypes';
+import type { GetFormQuery } from '@/app/gql/graphql';
 import { Input } from '@/shared/ui/Input';
 import { RadioGroup } from '@/shared/ui/RadioGroup';
 import { CheckboxGroup } from '@/shared/ui/CheckboxGroup';
@@ -61,7 +61,13 @@ interface AnswerInputProps {
   onCheckboxToggle: (questionId: string, option: string) => void;
 }
 
-export function AnswerInput({ question, answer, error, onTextChange, onCheckboxToggle }: AnswerInputProps) {
+export function AnswerInput({
+  question,
+  answer,
+  error,
+  onTextChange,
+  onCheckboxToggle,
+}: AnswerInputProps) {
   const { id, text, type, required, options } = question;
   const Renderer = ANSWER_RENDERERS[type];
 

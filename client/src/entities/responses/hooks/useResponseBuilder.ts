@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useGetFormQuery, useSubmitResponseMutation } from '@/app/api';
-import { QuestionType } from '@/app/generated/api.gen';
-import type { AnswerInput } from '@/app/generated/api.gen';
+import { QuestionType } from '@/shared/config/questionTypes';
+import type { AnswerInput } from '@/app/gql/graphql';
 
 type SubmitStatus = 'idle' | 'success' | 'error';
 
 const needsMultipleValues = (type: QuestionType) => type === QuestionType.Checkbox;
 
-export function useFormFiller(formId: string) {
+export function useResponseBuilder(formId: string) {
   const { data, isLoading, isError } = useGetFormQuery({ id: formId });
   const [submitResponse, { isLoading: isSubmitting }] = useSubmitResponseMutation();
 
@@ -39,9 +39,9 @@ export function useFormFiller(formId: string) {
     });
   };
 
-  const validate = (): boolean => {
+  const validate = (): Record<string, string> => {
     const questions = data?.form?.questions;
-    if (!questions) return true;
+    if (!questions) return {};
     const errors: Record<string, string> = {};
     for (const question of questions) {
       if (!question.required) continue;
@@ -54,12 +54,21 @@ export function useFormFiller(formId: string) {
       }
     }
     setValidationErrors(errors);
-    return Object.keys(errors).length === 0;
+    return errors;
   };
 
   const submit = async () => {
     if (!data?.form) return;
-    if (!validate()) return;
+    const errors = validate();
+    if (Object.keys(errors).length > 0) {
+      const firstKey = Object.keys(errors)[0];
+      requestAnimationFrame(() => {
+        document
+          .getElementById(`field-${firstKey}`)
+          ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+      return;
+    }
 
     setSubmitStatus('idle');
     const answerInputs: AnswerInput[] = data.form.questions.map((question) => {

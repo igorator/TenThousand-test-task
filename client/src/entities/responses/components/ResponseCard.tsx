@@ -1,4 +1,5 @@
-import { QuestionType, type GetResponsesQuery } from '@/app/generated/api.gen';
+import { QuestionType } from '@/shared/config/questionTypes';
+import type { GetResponsesQuery } from '@/app/gql/graphql';
 
 type Response = GetResponsesQuery['responses'][number];
 

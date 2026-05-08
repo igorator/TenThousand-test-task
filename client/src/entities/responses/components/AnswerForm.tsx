@@ -1,5 +1,5 @@
 import { AnswerInput } from './AnswerInput';
-import type { GetFormQuery } from '@/app/generated/api.gen';
+import type { GetFormQuery } from '@/app/gql/graphql';
 
 type Question = NonNullable<GetFormQuery['form']>['questions'][number];
 
@@ -27,14 +27,15 @@ export function AnswerForm({
   return (
     <div className="space-y-4">
       {questions.map((question) => (
-        <AnswerInput
-          key={question.id}
-          question={question}
-          answer={answers[question.id]}
-          error={validationErrors[question.id]}
-          onTextChange={onTextChange}
-          onCheckboxToggle={onCheckboxToggle}
-        />
+        <div key={question.id} id={`field-${question.id}`}>
+          <AnswerInput
+            question={question}
+            answer={answers[question.id]}
+            error={validationErrors[question.id]}
+            onTextChange={onTextChange}
+            onCheckboxToggle={onCheckboxToggle}
+          />
+        </div>
       ))}
     </div>
   );

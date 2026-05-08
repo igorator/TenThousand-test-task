@@ -1,6 +1,6 @@
 import { ROUTES } from '@/shared/config/routes';
 import { Button } from '@/shared/ui/Button';
-import type { GetFormsQuery } from '@/app/generated/api.gen';
+import type { GetFormsQuery } from '@/app/gql/graphql';
 
 type FormItem = GetFormsQuery['forms'][number];
 
