@@ -1,34 +1,16 @@
 import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route } from 'react-router';
-import { Layout } from '@/shared/components/Layout';
+import { Layout } from '@/Layout';
 import { ErrorMessage } from '@/shared/components/ErrorMessage';
-import { HomePage } from '@/pages/HomePage';
+import { HomePage, FormBuilderPage, FormFillerPage, FormResponsesPage } from '@/pages';
 import { ROUTES } from '@/shared/config/routes';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<Layout />}>
       <Route index element={<HomePage />} />
-      <Route
-        path={ROUTES.formNew}
-        lazy={async () => {
-          const { FormBuilderPage } = await import('@/pages/FormBuilderPage');
-          return { Component: FormBuilderPage };
-        }}
-      />
-      <Route
-        path={ROUTES.formFillPattern}
-        lazy={async () => {
-          const { FormFillerPage } = await import('@/pages/FormFillerPage');
-          return { Component: FormFillerPage };
-        }}
-      />
-      <Route
-        path={ROUTES.formResponsesPattern}
-        lazy={async () => {
-          const { FormResponsesPage } = await import('@/pages/FormResponsesPage');
-          return { Component: FormResponsesPage };
-        }}
-      />
+      <Route path={ROUTES.formNew} element={<FormBuilderPage />} />
+      <Route path={ROUTES.formFillPattern} element={<FormFillerPage />} />
+      <Route path={ROUTES.formResponsesPattern} element={<FormResponsesPage />} />
       <Route path="*" element={<ErrorMessage message="Page not found." />} />
     </Route>
   )
