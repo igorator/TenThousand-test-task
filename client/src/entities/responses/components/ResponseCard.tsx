@@ -1,4 +1,4 @@
-import { QuestionType } from '@/shared/config/questionTypes';
+import { QuestionType } from '@/entities/forms/config/questionTypes';
 import type { GetResponsesQuery } from '@/app/gql/graphql';
 
 type Response = GetResponsesQuery['responses'][number];

@@ -1,5 +1,5 @@
 import type { ComponentType } from 'react';
-import { QuestionType } from '@/shared/config/questionTypes';
+import { QuestionType } from '@/entities/forms/config/questionTypes';
 import type { GetFormQuery } from '@/app/gql/graphql';
 import { Input } from '@/shared/ui/Input';
 import { RadioGroup } from '@/shared/ui/RadioGroup';

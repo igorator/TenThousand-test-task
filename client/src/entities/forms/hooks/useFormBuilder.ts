@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useCreateFormMutation } from '@/app/api';
-import { QuestionType } from '@/shared/config/questionTypes';
+import { QuestionType } from '@/entities/forms/config/questionTypes';
 import type { QuestionFieldsFragment, QuestionInput } from '@/app/gql/graphql';
 import { ROUTES } from '@/shared/config/routes';
 

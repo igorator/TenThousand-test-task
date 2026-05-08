@@ -1,4 +1,4 @@
-import { QuestionType } from '@/shared/config/questionTypes';
+import { QuestionType } from '@/entities/forms/config/questionTypes';
 import type { DraftOption } from '@/entities/forms/hooks/useFormBuilder';
 import { Input } from '@/shared/ui/Input';
 import { Button } from '@/shared/ui/Button';

@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import { useResponseBuilder } from './useResponseBuilder';
-import { QuestionType } from '@/shared/config/questionTypes';
+import { QuestionType } from '@/entities/forms/config/questionTypes';
 import type { QuestionFieldsFragment } from '@/app/gql/graphql';
 import type { useGetFormQuery as UseGetFormQuery } from '@/app/api';
 

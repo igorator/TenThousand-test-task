@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { QuestionType } from '@/shared/config/questionTypes';
+import { QuestionType, QUESTION_TYPE_LABELS } from '@/entities/forms/config/questionTypes';
 import { FormQuestionEditor } from '@/entities/forms/components/FormQuestionEditor';
 import { Button } from '@/shared/ui/Button';
 import { Input } from '@/shared/ui/Input';
@@ -9,13 +9,6 @@ import { ErrorMessage } from '@/shared/components/ErrorMessage';
 import { ROUTES } from '@/shared/config/routes';
 
 const DESCRIPTION_ROWS = 2;
-
-const ADD_QUESTION_TYPES: { type: QuestionType; label: string }[] = [
-  { type: QuestionType.Text, label: 'Text' },
-  { type: QuestionType.MultipleChoice, label: 'Multiple Choice' },
-  { type: QuestionType.Checkbox, label: 'Checkboxes' },
-  { type: QuestionType.Date, label: 'Date' },
-];
 
 export function FormBuilderPage() {
   const {
@@ -81,11 +74,13 @@ export function FormBuilderPage() {
             Add Question
           </p>
           <div className="flex flex-wrap gap-2">
-            {ADD_QUESTION_TYPES.map(({ type, label }) => (
-              <Button key={type} variant="secondary" onClick={() => addQuestion(type)}>
-                + {label}
-              </Button>
-            ))}
+            {(Object.entries(QUESTION_TYPE_LABELS) as [QuestionType, string][]).map(
+              ([type, label]) => (
+                <Button key={type} variant="secondary" onClick={() => addQuestion(type)}>
+                  + {label}
+                </Button>
+              )
+            )}
           </div>
         </div>
 

@@ -1,15 +1,8 @@
-import { QuestionType } from '@/shared/config/questionTypes';
+import { QuestionType, QUESTION_TYPE_LABELS } from '@/entities/forms/config/questionTypes';
 import type { DraftQuestion } from '@/entities/forms/hooks/useFormBuilder';
 import { Input } from '@/shared/ui/Input';
 import { Select } from '@/shared/ui/Select';
 import { OptionsList } from './OptionsList';
-
-const QUESTION_TYPE_LABELS: Record<QuestionType, string> = {
-  [QuestionType.Text]: 'Short Text',
-  [QuestionType.MultipleChoice]: 'Multiple Choice',
-  [QuestionType.Checkbox]: 'Checkboxes',
-  [QuestionType.Date]: 'Date',
-};
 
 const needsOptions = (type: QuestionType) =>
   type === QuestionType.MultipleChoice || type === QuestionType.Checkbox;
