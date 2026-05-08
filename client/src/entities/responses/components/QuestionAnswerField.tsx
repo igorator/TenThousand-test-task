@@ -7,7 +7,7 @@ import { CheckboxGroup } from '@/shared/ui/CheckboxGroup';
 
 type Question = NonNullable<GetFormQuery['form']>['questions'][number];
 
-interface RendererProps {
+interface QuestionInputProps {
   id: string;
   answer: string | string[] | undefined;
   options?: string[] | null;
@@ -16,7 +16,7 @@ interface RendererProps {
   onCheckboxToggle: (questionId: string, option: string) => void;
 }
 
-const QUESTION_INPUT_BY_TYPE: Record<QuestionType, ComponentType<RendererProps>> = {
+const QUESTION_INPUT_BY_TYPE: Record<QuestionType, ComponentType<QuestionInputProps>> = {
   [QuestionType.Text]: ({ id, answer, error, onTextChange }) => (
     <Input
       type="text"
