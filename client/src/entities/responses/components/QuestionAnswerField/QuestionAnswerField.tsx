@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
-import { QuestionType } from '@/entities/forms/config/questionTypes';
-import type { GetFormQuery } from '@/app/gql/graphql';
+import { QuestionType } from 'shared';
+import type { GetFormQuery } from 'shared';
 import { Input } from '@/shared/ui/Input';
 import { RadioGroup } from '@/shared/ui/RadioGroup';
 import { CheckboxGroup } from '@/shared/ui/CheckboxGroup';

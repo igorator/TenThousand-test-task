@@ -1,4 +1,5 @@
-import { QuestionType, QUESTION_TYPE_LABELS } from '@/entities/forms/config/questionTypes';
+import { QuestionType } from 'shared';
+import { QUESTION_TYPE_LABELS } from '@/entities/forms/config/questionTypes';
 import type { DraftQuestion } from '@/entities/forms/hooks/useFormBuilder';
 import { Input } from '@/shared/ui/Input';
 import { Select } from '@/shared/ui/Select';

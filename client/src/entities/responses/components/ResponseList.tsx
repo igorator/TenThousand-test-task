@@ -1,7 +1,7 @@
 import { Link } from 'react-router';
 import { ROUTES } from '@/shared/config/routes';
 import { ResponseCard } from './ResponseCard';
-import type { GetResponsesQuery } from '@/app/gql/graphql';
+import type { GetResponsesQuery } from 'shared';
 
 type Response = GetResponsesQuery['responses'][number];
 

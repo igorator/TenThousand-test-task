@@ -1,5 +1,5 @@
-import { QuestionType } from '@/entities/forms/config/questionTypes';
-import type { QuestionFieldsFragment } from '@/app/gql/graphql';
+import type { QuestionFieldsFragment } from 'shared';
+import { QuestionType } from 'shared';
 
 export const needsMultipleValues = (type: QuestionType) => type === QuestionType.Checkbox;
 

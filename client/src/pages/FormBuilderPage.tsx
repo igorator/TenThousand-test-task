@@ -1,5 +1,6 @@
 import { Link } from 'react-router';
-import { QuestionType, QUESTION_TYPE_LABELS } from '@/entities/forms/config/questionTypes';
+import { QuestionType } from 'shared';
+import { QUESTION_TYPE_LABELS } from '@/entities/forms/config/questionTypes';
 import { FormQuestionEditor } from '@/entities/forms/components/FormQuestionEditor';
 import { Button } from '@/shared/ui/Button';
 import { Input } from '@/shared/ui/Input';

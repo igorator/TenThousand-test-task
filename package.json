@@ -3,12 +3,13 @@
   "private": true,
   "workspaces": [
     "client",
-    "server"
+    "server",
+    "shared"
   ],
   "scripts": {
-    "dev": "concurrently --kill-others --names \"server,client\" --prefix-colors \"cyan,magenta\" \"npm run dev -w server\" \"npm run dev -w client\"",
-    "build": "npm run build -w server && npm run build -w client",
-    "codegen": "npm run codegen -w client",
+    "dev": "npm run codegen && concurrently --kill-others --names \"server,client\" --prefix-colors \"cyan,magenta\" \"npm run dev -w server\" \"npm run dev -w client\"",
+    "build": "npm run codegen && npm run build -w server && npm run build -w client",
+    "codegen": "npm run codegen -w shared && tsc -b shared/tsconfig.json",
     "test": "npm run test -w client",
     "test:ci": "npm run test:ci -w client",
     "lint": "eslint .",

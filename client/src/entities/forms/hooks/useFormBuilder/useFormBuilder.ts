@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useCreateFormMutation } from '@/app/api';
-import type { QuestionInput } from '@/app/gql/graphql';
-import { QuestionType } from '@/entities/forms/config/questionTypes';
+import type { QuestionInput } from 'shared';
+import { QuestionType } from 'shared';
 import { ROUTES } from '@/shared/config/routes';
 import { needsOptions, validateFormDraft } from './validation';
 import type { DraftQuestion } from './validation';

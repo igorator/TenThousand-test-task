@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { QuestionAnswerField } from './QuestionAnswerField';
-import { QuestionType } from '@/entities/forms/config/questionTypes';
-import type { GetFormQuery } from '@/app/gql/graphql';
+import { QuestionType } from 'shared';
+import type { GetFormQuery } from 'shared';
 
 type Question = NonNullable<GetFormQuery['form']>['questions'][number];
 

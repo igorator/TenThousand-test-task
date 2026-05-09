@@ -21,24 +21,14 @@ npm install
 npm run dev
 ```
 
+GraphQL codegen runs automatically before the servers start, generating shared TypeScript types from the schema.
+
 | Service        | URL                   |
 | -------------- | --------------------- |
 | React client   | http://localhost:3000 |
 | GraphQL server | http://localhost:4000 |
 
 Open **http://localhost:3000** in your browser.
-
----
-
-## GraphQL Codegen
-
-TypeScript types and typed GraphQL documents are auto-generated from the schema using [`@graphql-codegen/client-preset`](https://the-guild.dev/graphql/codegen/plugins/presets/preset-client). The generated files (`client/src/app/gql/`) are committed to the repo, so codegen is **not required** to run the project.
-
-Run it manually after changing the schema or any `.graphql` file:
-
-```bash
-npm run codegen
-```
 
 ---
 

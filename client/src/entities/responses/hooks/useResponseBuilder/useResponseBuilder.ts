@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useGetFormQuery, useSubmitResponseMutation } from '@/app/api';
-import type { AnswerInput } from '@/app/gql/graphql';
+import type { AnswerInput } from 'shared';
 import { needsMultipleValues, validateAnswers } from './validation';
 
 type SubmitStatus = 'idle' | 'success' | 'error';

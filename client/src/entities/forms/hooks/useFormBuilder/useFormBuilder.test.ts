@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import { useFormBuilder } from './useFormBuilder';
-import { QuestionType } from '@/entities/forms/config/questionTypes';
+import { QuestionType } from 'shared';
 
 const mockNavigate = vi.fn();
 const mockCreateForm = vi.fn();

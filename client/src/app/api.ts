@@ -6,7 +6,7 @@ import {
   CreateFormDocument,
   GetResponsesDocument,
   SubmitResponseDocument,
-} from './gql/graphql';
+} from 'shared';
 import type {
   GetFormsQuery,
   GetFormQuery,
@@ -17,7 +17,7 @@ import type {
   GetResponsesQueryVariables,
   SubmitResponseMutation,
   SubmitResponseMutationVariables,
-} from './gql/graphql';
+} from 'shared';
 
 export const api = createApi({
   reducerPath: 'api',

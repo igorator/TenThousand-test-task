@@ -1,5 +1,5 @@
-import type { QuestionFieldsFragment } from '@/app/gql/graphql';
-import { QuestionType } from '@/entities/forms/config/questionTypes';
+import type { QuestionFieldsFragment } from 'shared';
+import { QuestionType } from 'shared';
 
 export type DraftOption = { id: string; value: string };
 export type DraftQuestion = Omit<QuestionFieldsFragment, 'options'> & { options: DraftOption[] };

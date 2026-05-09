@@ -1,5 +1,5 @@
 import { QuestionAnswerField } from './QuestionAnswerField';
-import type { GetFormQuery } from '@/app/gql/graphql';
+import type { GetFormQuery } from 'shared';
 
 type Question = NonNullable<GetFormQuery['form']>['questions'][number];
 

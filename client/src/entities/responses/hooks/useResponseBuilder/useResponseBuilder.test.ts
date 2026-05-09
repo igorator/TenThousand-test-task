@@ -1,7 +1,7 @@
 import { renderHook, act } from '@testing-library/react';
 import { useResponseBuilder } from './useResponseBuilder';
-import { QuestionType } from '@/entities/forms/config/questionTypes';
-import type { QuestionFieldsFragment } from '@/app/gql/graphql';
+import { QuestionType } from 'shared';
+import type { QuestionFieldsFragment } from 'shared';
 import type { useGetFormQuery as UseGetFormQuery } from '@/app/api';
 
 const mockSubmitResponse = vi.fn();
