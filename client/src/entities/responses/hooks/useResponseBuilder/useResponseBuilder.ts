@@ -22,21 +22,6 @@ export function useResponseBuilder(formId: string) {
     });
   };
 
-  const toggleCheckbox = (questionId: string, option: string) => {
-    setAnswers((prev) => {
-      const current = (prev[questionId] as string[]) ?? [];
-      const next = current.includes(option)
-        ? current.filter((value) => value !== option)
-        : [...current, option];
-      return { ...prev, [questionId]: next };
-    });
-    setValidationErrors((prev) => {
-      const next = { ...prev };
-      delete next[questionId];
-      return next;
-    });
-  };
-
   const validate = (): Record<string, string> => {
     const questions = data?.form?.questions;
     if (!questions) return {};
@@ -85,7 +70,6 @@ export function useResponseBuilder(formId: string) {
     isSubmitting,
     submitStatus,
     setAnswer,
-    toggleCheckbox,
     submit,
   };
 }

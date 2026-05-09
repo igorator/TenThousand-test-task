@@ -9,8 +9,8 @@ const router = createBrowserRouter(
     <Route element={<Layout />}>
       <Route index element={<HomePage />} />
       <Route path={ROUTES.formNew} element={<FormBuilderPage />} />
-      <Route path={ROUTES.formFillPattern} element={<FormFillerPage />} />
-      <Route path={ROUTES.formResponsesPattern} element={<FormResponsesPage />} />
+      <Route path={ROUTES.formFill} element={<FormFillerPage />} />
+      <Route path={ROUTES.formResponses} element={<FormResponsesPage />} />
       <Route path="*" element={<ErrorMessage message="Page not found." />} />
     </Route>
   )

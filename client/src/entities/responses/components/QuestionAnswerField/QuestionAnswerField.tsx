@@ -12,61 +12,67 @@ interface QuestionInputProps {
   answer: string | string[] | undefined;
   options?: string[] | null;
   error?: string;
-  onTextChange: (questionId: string, value: string) => void;
-  onCheckboxToggle: (questionId: string, option: string) => void;
+  onChange: (questionId: string, value: string | string[]) => void;
 }
 
 const QUESTION_INPUT_BY_TYPE: Record<QuestionInputType, ComponentType<QuestionInputProps>> = {
-  [QuestionInputType.Text]: ({ id, answer, error, onTextChange }) => (
+  [QuestionInputType.Text]: ({ id, answer, error, onChange }) => (
     <Input
       type="text"
       value={(answer as string) ?? ''}
-      onChange={(e) => onTextChange(id, e.target.value)}
+      onChange={(e) => onChange(id, e.target.value)}
       placeholder="Your answer"
       error={error}
     />
   ),
-  [QuestionInputType.Date]: ({ id, answer, error, onTextChange }) => (
+  [QuestionInputType.Date]: ({ id, answer, error, onChange }) => (
     <Input
       type="date"
       value={(answer as string) ?? ''}
-      onChange={(e) => onTextChange(id, e.target.value)}
+      onChange={(e) => onChange(id, e.target.value)}
       error={error}
     />
   ),
-  [QuestionInputType.MultipleChoice]: ({ id, answer, options, error, onTextChange }) => (
+  [QuestionInputType.MultipleChoice]: ({ id, answer, options, error, onChange }) => (
     <RadioGroup
       name={id}
       options={options ?? []}
       value={answer as string}
-      onChange={(value) => onTextChange(id, value)}
+      onChange={(value) => onChange(id, value)}
       error={error}
     />
   ),
-  [QuestionInputType.Checkbox]: ({ id, answer, options, error, onCheckboxToggle }) => (
-    <CheckboxGroup
-      options={options ?? []}
-      value={(answer as string[]) ?? []}
-      onChange={(option) => onCheckboxToggle(id, option)}
-      error={error}
-    />
-  ),
+  [QuestionInputType.Checkbox]: ({ id, answer, options, error, onChange }) => {
+    const handleToggle = (option: string) => {
+      const current = (answer as string[]) ?? [];
+      const next = current.includes(option)
+        ? current.filter((v) => v !== option)
+        : [...current, option];
+      onChange(id, next);
+    };
+    return (
+      <CheckboxGroup
+        options={options ?? []}
+        value={(answer as string[]) ?? []}
+        onChange={handleToggle}
+        error={error}
+      />
+    );
+  },
 };
 
 export interface QuestionAnswerFieldProps {
   question: Question;
   answer: string | string[] | undefined;
   error?: string;
-  onTextChange: (questionId: string, value: string) => void;
-  onCheckboxToggle: (questionId: string, option: string) => void;
+  onChange: (questionId: string, value: string | string[]) => void;
 }
 
 export function QuestionAnswerField({
   question,
   answer,
   error,
-  onTextChange,
-  onCheckboxToggle,
+  onChange,
 }: QuestionAnswerFieldProps) {
   const { id, text, type, required, options } = question;
   const QuestionInput = QUESTION_INPUT_BY_TYPE[type];
@@ -77,14 +83,7 @@ export function QuestionAnswerField({
         {text}
         {required && <span className="text-required ml-1">*</span>}
       </p>
-      <QuestionInput
-        id={id}
-        answer={answer}
-        options={options}
-        error={error}
-        onTextChange={onTextChange}
-        onCheckboxToggle={onCheckboxToggle}
-      />
+      <QuestionInput id={id} answer={answer} options={options} error={error} onChange={onChange} />
     </div>
   );
 }

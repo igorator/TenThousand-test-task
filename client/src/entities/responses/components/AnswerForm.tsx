@@ -7,17 +7,10 @@ interface AnswerFormProps {
   questions: Question[];
   answers: Record<string, string | string[]>;
   validationErrors: Record<string, string>;
-  onTextChange: (questionId: string, value: string) => void;
-  onCheckboxToggle: (questionId: string, option: string) => void;
+  onChange: (questionId: string, value: string | string[]) => void;
 }
 
-export function AnswerForm({
-  questions,
-  answers,
-  validationErrors,
-  onTextChange,
-  onCheckboxToggle,
-}: AnswerFormProps) {
+export function AnswerForm({ questions, answers, validationErrors, onChange }: AnswerFormProps) {
   if (questions.length === 0) {
     return (
       <div className="text-center py-12 text-text-muted text-sm">This form has no questions.</div>
@@ -32,8 +25,7 @@ export function AnswerForm({
             question={question}
             answer={answers[question.id]}
             error={validationErrors[question.id]}
-            onTextChange={onTextChange}
-            onCheckboxToggle={onCheckboxToggle}
+            onChange={onChange}
           />
         </div>
       ))}

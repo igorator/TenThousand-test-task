@@ -1,3 +1,4 @@
+import { generatePath } from 'react-router';
 import { ROUTES } from '@/shared/config/routes';
 import { Button } from '@/shared/ui/Button';
 
@@ -15,10 +16,14 @@ export function FormCard({ id, title, description }: FormCardProps) {
         <p className="text-text-muted text-sm wrap-break-word line-clamp-3">{description}</p>
       )}
       <div className="flex gap-3 mt-auto pt-4">
-        <Button to={ROUTES.formFill(id)} className="flex-1">
+        <Button to={generatePath(ROUTES.formFill, { id })} className="flex-1">
           Fill Form
         </Button>
-        <Button to={ROUTES.formResponses(id)} variant="secondary" className="flex-1">
+        <Button
+          to={generatePath(ROUTES.formResponses, { id })}
+          variant="secondary"
+          className="flex-1"
+        >
           View Responses
         </Button>
       </div>

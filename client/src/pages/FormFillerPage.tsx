@@ -18,7 +18,6 @@ export function FormFillerPage() {
     isSubmitting,
     submitStatus,
     setAnswer,
-    toggleCheckbox,
     submit,
   } = useResponseBuilder(id!);
 
@@ -41,7 +40,7 @@ export function FormFillerPage() {
 
       {submitStatus === 'error' && (
         <div className="mb-4">
-          <ErrorMessage message="Submission failed. Please try again." />
+          <ErrorMessage message="Something went wrong. Please try again." />
         </div>
       )}
 
@@ -49,8 +48,7 @@ export function FormFillerPage() {
         questions={form.questions}
         answers={answers}
         validationErrors={validationErrors}
-        onTextChange={setAnswer}
-        onCheckboxToggle={toggleCheckbox}
+        onChange={setAnswer}
       />
 
       <div className="flex justify-end mt-6">

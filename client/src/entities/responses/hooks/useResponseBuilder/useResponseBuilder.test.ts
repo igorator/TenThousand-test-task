@@ -57,18 +57,14 @@ describe('useResponseBuilder', () => {
     expect(result.current.answers['q-1']).toBe('My answer');
   });
 
-  it('should toggle a checkbox option on and off', () => {
+  it('should set an array answer', () => {
     const { result } = renderHook(() => useResponseBuilder('form-1'));
 
     act(() => {
-      result.current.toggleCheckbox('q-1', 'Option A');
+      result.current.setAnswer('q-1', ['Option A', 'Option B']);
     });
-    expect(result.current.answers['q-1']).toEqual(['Option A']);
 
-    act(() => {
-      result.current.toggleCheckbox('q-1', 'Option A');
-    });
-    expect(result.current.answers['q-1']).toEqual([]);
+    expect(result.current.answers['q-1']).toEqual(['Option A', 'Option B']);
   });
 
   it('should clear validation error when answer is provided', () => {

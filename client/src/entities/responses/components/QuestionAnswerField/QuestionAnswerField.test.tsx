@@ -16,8 +16,7 @@ const makeQuestion = (overrides: Partial<Question> = {}): Question => ({
 
 const defaultProps = {
   answer: undefined,
-  onTextChange: vi.fn(),
-  onCheckboxToggle: vi.fn(),
+  onChange: vi.fn(),
 };
 
 describe('QuestionAnswerField', () => {
@@ -85,19 +84,51 @@ describe('QuestionAnswerField', () => {
     expect(screen.getAllByRole('checkbox')).toHaveLength(2);
   });
 
-  it('calls onTextChange with question id and value when text input changes', () => {
-    const onTextChange = vi.fn();
-    render(
-      <QuestionAnswerField
-        {...defaultProps}
-        question={makeQuestion()}
-        onTextChange={onTextChange}
-      />
-    );
+  it('calls onChange with question id and value when text input changes', () => {
+    const onChange = vi.fn();
+    render(<QuestionAnswerField {...defaultProps} question={makeQuestion()} onChange={onChange} />);
 
     fireEvent.change(screen.getByRole('textbox'), { target: { value: 'John' } });
 
-    expect(onTextChange).toHaveBeenCalledWith('q-1', 'John');
+    expect(onChange).toHaveBeenCalledWith('q-1', 'John');
+  });
+
+  it('calls onChange with toggled array when checkbox is clicked', () => {
+    const onChange = vi.fn();
+    render(
+      <QuestionAnswerField
+        {...defaultProps}
+        question={makeQuestion({
+          type: QuestionInputType.Checkbox,
+          options: ['Option A', 'Option B'],
+        })}
+        answer={[]}
+        onChange={onChange}
+      />
+    );
+
+    fireEvent.click(screen.getAllByRole('checkbox')[0]);
+
+    expect(onChange).toHaveBeenCalledWith('q-1', ['Option A']);
+  });
+
+  it('calls onChange with option removed when already-checked checkbox is clicked', () => {
+    const onChange = vi.fn();
+    render(
+      <QuestionAnswerField
+        {...defaultProps}
+        question={makeQuestion({
+          type: QuestionInputType.Checkbox,
+          options: ['Option A', 'Option B'],
+        })}
+        answer={['Option A']}
+        onChange={onChange}
+      />
+    );
+
+    fireEvent.click(screen.getAllByRole('checkbox')[0]);
+
+    expect(onChange).toHaveBeenCalledWith('q-1', []);
   });
 
   it('shows error message when error is provided', () => {

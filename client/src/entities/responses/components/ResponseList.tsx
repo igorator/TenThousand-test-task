@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { Link, generatePath } from 'react-router';
 import { ROUTES } from '@/shared/config/routes';
 import { ResponseCard } from './ResponseCard';
 import type { GetResponsesQuery } from 'shared';
@@ -16,7 +16,7 @@ export function ResponseList({ responses, formId }: ResponseListProps) {
       <div className="py-20 text-text-muted text-center">
         <p className="mb-2 text-lg">No responses yet</p>
         <Link
-          to={ROUTES.formFill(formId)}
+          to={generatePath(ROUTES.formFill, { id: formId })}
           className="text-primary hover:text-primary-dark text-sm transition-colors"
         >
           Be the first to fill this form
