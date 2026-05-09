@@ -34,8 +34,8 @@ export function FormFillerPage() {
         </Link>
       </div>
 
-      <div className="bg-gradient-primary rounded-xl p-6 text-white mb-6">
-        <h1 className="text-2xl font-bold mb-1">{form.title}</h1>
+      <div className="bg-primary mb-6 p-6 rounded-xl text-white">
+        <h1 className="mb-1 font-bold text-2xl">{form.title}</h1>
         {form.description && <p className="text-primary-light text-sm">{form.description}</p>}
       </div>
 
@@ -53,7 +53,7 @@ export function FormFillerPage() {
         onCheckboxToggle={toggleCheckbox}
       />
 
-      <div className="mt-6 flex justify-end">
+      <div className="flex justify-end mt-6">
         <Button
           onClick={submit}
           isLoading={isSubmitting}
