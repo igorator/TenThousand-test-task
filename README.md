@@ -48,9 +48,8 @@ Tests live in `client/src/` next to the code they cover. The suite uses [Vitest]
 
 | File | What's tested |
 | ---- | ------------- |
-| `entities/forms/hooks/useFormBuilder/useFormBuilder.test.ts` | initial state, adding/removing questions, updating the form title |
-| `entities/responses/hooks/useResponseBuilder/useResponseBuilder.test.ts` | initial state, text answers, checkbox toggle, validation error clearing, submit success/error status |
-| `entities/responses/components/QuestionAnswerField/QuestionAnswerField.test.tsx` | renders correct input per question type (text, date, radio, checkbox), required indicator, error message, onTextChange callback |
+| `pages/FormBuilderPage/FormBuilderPage.test.tsx` | rendering, validation (title, questions, question text), adding/removing questions, submit with correct payload, navigation, error banner, cancel |
+| `pages/FormFillerPage/FormFillerPage.test.tsx` | loading/error states, rendering, required-field validation, submit with text/checkbox answers, success page, error banner, retry |
 
 ---
 

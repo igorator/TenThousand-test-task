@@ -2,10 +2,10 @@ import { useNavigate } from 'react-router';
 import { useCreateFormMutation } from '@/app/api';
 import { type QuestionInput } from 'shared';
 import { ROUTES } from '@/shared/config/routes';
-import { needsOptions } from '../../components/FormBuilder/validation';
-import type { DraftQuestion } from '../../components/FormBuilder/validation';
+import { needsOptions } from '../components/FormBuilder/validation';
+import type { DraftQuestion } from '../components/FormBuilder/validation';
 
-export type { DraftOption, DraftQuestion } from '../../components/FormBuilder/validation';
+export type { DraftOption, DraftQuestion } from '../components/FormBuilder/validation';
 
 export function useFormBuilder() {
   const navigate = useNavigate();
