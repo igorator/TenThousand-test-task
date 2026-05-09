@@ -1,7 +1,5 @@
 import { QuestionInputType, type Question } from 'shared';
 
-export const needsMultipleValues = (type: QuestionInputType) => type === QuestionInputType.Checkbox;
-
 export const MAX_TEXT_ANSWER_LENGTH = 1000;
 
 const TEXT_ANSWER_TYPES = new Set<QuestionInputType>([

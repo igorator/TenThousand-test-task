@@ -39,48 +39,10 @@ describe('useResponseBuilder', () => {
     vi.mocked(useGetFormQuery).mockReturnValue(mockQueryResult());
   });
 
-  it('should initialize with empty answers and idle submit status', () => {
+  it('should initialize with idle submit status', () => {
     const { result } = renderHook(() => useResponseBuilder('form-1'));
 
-    expect(result.current.answers).toEqual({});
-    expect(result.current.validationErrors).toEqual({});
     expect(result.current.submitStatus).toBe('idle');
-  });
-
-  it('should set a text answer', () => {
-    const { result } = renderHook(() => useResponseBuilder('form-1'));
-
-    act(() => {
-      result.current.setAnswer('q-1', 'My answer');
-    });
-
-    expect(result.current.answers['q-1']).toBe('My answer');
-  });
-
-  it('should set an array answer', () => {
-    const { result } = renderHook(() => useResponseBuilder('form-1'));
-
-    act(() => {
-      result.current.setAnswer('q-1', ['Option A', 'Option B']);
-    });
-
-    expect(result.current.answers['q-1']).toEqual(['Option A', 'Option B']);
-  });
-
-  it('should clear validation error when answer is provided', () => {
-    vi.mocked(useGetFormQuery).mockReturnValue(mockQueryResult([makeQuestion({ required: true })]));
-
-    const { result } = renderHook(() => useResponseBuilder('form-1'));
-
-    act(() => {
-      result.current.submit();
-    });
-    expect(result.current.validationErrors['q-1']).toBe('This field is required.');
-
-    act(() => {
-      result.current.setAnswer('q-1', 'filled');
-    });
-    expect(result.current.validationErrors['q-1']).toBeUndefined();
   });
 
   it('should set submitStatus to success on successful submit', async () => {
@@ -90,11 +52,10 @@ describe('useResponseBuilder', () => {
     const { result } = renderHook(() => useResponseBuilder('form-1'));
 
     await act(async () => {
-      await result.current.submit();
+      await result.current.submit({ 'q-1': 'My answer' });
     });
 
     expect(result.current.submitStatus).toBe('success');
-    expect(result.current.answers).toEqual({});
   });
 
   it('should set submitStatus to error on failed submit', async () => {
@@ -104,9 +65,43 @@ describe('useResponseBuilder', () => {
     const { result } = renderHook(() => useResponseBuilder('form-1'));
 
     await act(async () => {
-      await result.current.submit();
+      await result.current.submit({ 'q-1': 'My answer' });
     });
 
     expect(result.current.submitStatus).toBe('error');
+  });
+
+  it('should serialize checkbox answers as values array', async () => {
+    vi.mocked(useGetFormQuery).mockReturnValue(
+      mockQueryResult([makeQuestion({ type: QuestionInputType.Checkbox })])
+    );
+    mockSubmitResponse.mockResolvedValue({ data: { submitResponse: true } });
+
+    const { result } = renderHook(() => useResponseBuilder('form-1'));
+
+    await act(async () => {
+      await result.current.submit({ 'q-1': ['Option A', 'Option B'] });
+    });
+
+    expect(mockSubmitResponse).toHaveBeenCalledWith({
+      formId: 'form-1',
+      answers: [{ questionId: 'q-1', values: ['Option A', 'Option B'] }],
+    });
+  });
+
+  it('should serialize text answers as value string', async () => {
+    vi.mocked(useGetFormQuery).mockReturnValue(mockQueryResult([makeQuestion()]));
+    mockSubmitResponse.mockResolvedValue({ data: { submitResponse: true } });
+
+    const { result } = renderHook(() => useResponseBuilder('form-1'));
+
+    await act(async () => {
+      await result.current.submit({ 'q-1': 'hello' });
+    });
+
+    expect(mockSubmitResponse).toHaveBeenCalledWith({
+      formId: 'form-1',
+      answers: [{ questionId: 'q-1', value: 'hello' }],
+    });
   });
 });

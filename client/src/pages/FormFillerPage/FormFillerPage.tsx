@@ -1,7 +1,6 @@
 import { Link, useParams } from 'react-router';
 import { Spinner } from '@/shared/components/Spinner';
 import { ErrorMessage } from '@/shared/components/ErrorMessage';
-import { Button } from '@/shared/ui/Button';
 import { useResponseBuilder } from '@/entities/responses/hooks/useResponseBuilder';
 import { ResponseSuccess } from '@/entities/responses/components/ResponseSuccess';
 import { AnswerForm } from '@/entities/responses/components/AnswerForm';
@@ -9,17 +8,7 @@ import { ROUTES } from '@/shared/config/routes';
 
 export function FormFillerPage() {
   const { id } = useParams<{ id: string }>();
-  const {
-    form,
-    isLoading,
-    isError,
-    answers,
-    validationErrors,
-    isSubmitting,
-    submitStatus,
-    setAnswer,
-    submit,
-  } = useResponseBuilder(id!);
+  const { form, isLoading, isError, isSubmitting, submitStatus, submit } = useResponseBuilder(id!);
 
   if (isLoading) return <Spinner />;
   if (isError || !form) return <ErrorMessage message="Form not found." />;
@@ -44,23 +33,7 @@ export function FormFillerPage() {
         </div>
       )}
 
-      <AnswerForm
-        questions={form.questions}
-        answers={answers}
-        validationErrors={validationErrors}
-        onChange={setAnswer}
-      />
-
-      <div className="flex justify-end mt-6">
-        <Button
-          onClick={submit}
-          isLoading={isSubmitting}
-          loadingText="Submitting…"
-          className="px-6"
-        >
-          Submit
-        </Button>
-      </div>
+      <AnswerForm questions={form.questions} isSubmitting={isSubmitting} onSubmit={submit} />
     </div>
   );
 }

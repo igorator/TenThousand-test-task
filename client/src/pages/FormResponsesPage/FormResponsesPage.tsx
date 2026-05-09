@@ -7,8 +7,16 @@ import { ROUTES } from '@/shared/config/routes';
 
 export function FormResponsesPage() {
   const { id } = useParams<{ id: string }>();
-  const { data: formData, isLoading: formLoading, isError: formError } = useGetFormQuery({ id: id! });
-  const { data: responsesData, isLoading: responsesLoading, isError: responsesError } = useGetResponsesQuery({ formId: id! });
+  const {
+    data: formData,
+    isLoading: formLoading,
+    isError: formError,
+  } = useGetFormQuery({ id: id! });
+  const {
+    data: responsesData,
+    isLoading: responsesLoading,
+    isError: responsesError,
+  } = useGetResponsesQuery({ formId: id! });
 
   const form = formData?.form;
   const responses = responsesData?.responses ?? [];
@@ -26,9 +34,7 @@ export function FormResponsesPage() {
 
       <div className="mb-6">
         <h1 className="font-bold text-text text-2xl">{form.title}</h1>
-        {form.description && (
-          <p className="mt-1 text-text-muted text-sm">{form.description}</p>
-        )}
+        {form.description && <p className="mt-1 text-text-muted text-sm">{form.description}</p>}
         {!responsesLoading && (
           <p className="mt-1 text-text-muted text-sm">
             <span className="text-primary font-medium">{responses.length}</span>{' '}
