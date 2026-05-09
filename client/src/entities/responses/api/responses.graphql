@@ -1,32 +1,37 @@
-fragment AnswerFields on Answer {
-  question {
-    id
-    text
-    type
-    required
-    options
-  }
-  value
-  values
-}
-
-fragment ResponseFields on Response {
-  id
-  formId
-  submittedAt
-  answers {
-    ...AnswerFields
-  }
-}
-
 query GetResponses($formId: ID!) {
   responses(formId: $formId) {
-    ...ResponseFields
+    id
+    formId
+    submittedAt
+    answers {
+      value
+      values
+      question {
+        id
+        text
+        type
+        required
+        options
+      }
+    }
   }
 }
 
 mutation SubmitResponse($formId: ID!, $answers: [AnswerInput!]!) {
   submitResponse(formId: $formId, answers: $answers) {
-    ...ResponseFields
+    id
+    formId
+    submittedAt
+    answers {
+      value
+      values
+      question {
+        id
+        text
+        type
+        required
+        options
+      }
+    }
   }
 }

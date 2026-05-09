@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { QuestionAnswerField } from './QuestionAnswerField';
-import { QuestionType } from 'shared';
+import { QuestionInputType } from 'shared';
 import type { GetFormQuery } from 'shared';
 
 type Question = NonNullable<GetFormQuery['form']>['questions'][number];
@@ -8,7 +8,7 @@ type Question = NonNullable<GetFormQuery['form']>['questions'][number];
 const makeQuestion = (overrides: Partial<Question> = {}): Question => ({
   id: 'q-1',
   text: 'What is your name?',
-  type: QuestionType.Text,
+  type: QuestionInputType.Text,
   required: false,
   options: null,
   ...overrides,
@@ -47,7 +47,10 @@ describe('QuestionAnswerField', () => {
 
   it('renders date input for DATE type', () => {
     const { container } = render(
-      <QuestionAnswerField {...defaultProps} question={makeQuestion({ type: QuestionType.Date })} />
+      <QuestionAnswerField
+        {...defaultProps}
+        question={makeQuestion({ type: QuestionInputType.Date })}
+      />
     );
 
     expect(container.querySelector('input[type="date"]')).toBeTruthy();
@@ -58,7 +61,7 @@ describe('QuestionAnswerField', () => {
       <QuestionAnswerField
         {...defaultProps}
         question={makeQuestion({
-          type: QuestionType.MultipleChoice,
+          type: QuestionInputType.MultipleChoice,
           options: ['Option A', 'Option B'],
         })}
       />
@@ -71,7 +74,10 @@ describe('QuestionAnswerField', () => {
     render(
       <QuestionAnswerField
         {...defaultProps}
-        question={makeQuestion({ type: QuestionType.Checkbox, options: ['Option A', 'Option B'] })}
+        question={makeQuestion({
+          type: QuestionInputType.Checkbox,
+          options: ['Option A', 'Option B'],
+        })}
         answer={[]}
       />
     );

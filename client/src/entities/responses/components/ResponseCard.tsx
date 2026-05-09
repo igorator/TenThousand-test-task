@@ -1,4 +1,4 @@
-import { QuestionType } from 'shared';
+import { QuestionInputType } from 'shared';
 import type { GetResponsesQuery } from 'shared';
 
 type Response = GetResponsesQuery['responses'][number];
@@ -20,7 +20,7 @@ export function ResponseCard({ response, index }: ResponseCardProps) {
       <div className="divide-y divide-border">
         {response.answers.map((answer) => {
           const displayValue =
-            answer.question.type === QuestionType.Checkbox
+            answer.question.type === QuestionInputType.Checkbox
               ? (answer.values ?? []).join(', ') || '—'
               : answer.value || '—';
           return (

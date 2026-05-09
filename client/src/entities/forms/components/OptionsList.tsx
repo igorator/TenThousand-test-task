@@ -1,11 +1,11 @@
-import { QuestionType } from 'shared';
+import { QuestionInputType } from 'shared';
 import type { DraftOption } from '@/entities/forms/hooks/useFormBuilder';
 import { Input } from '@/shared/ui/Input';
 import { Button } from '@/shared/ui/Button';
 
 export interface OptionsListProps {
   questionId: string;
-  type: QuestionType;
+  type: QuestionInputType;
   options: DraftOption[];
   error?: string;
   onAddOption: (questionId: string) => void;
@@ -26,7 +26,7 @@ export function OptionsList({
     <div className="space-y-2 pl-2 border-l-2 border-primary-muted">
       {options.map((option, index) => (
         <div key={option.id} className="flex items-center gap-2">
-          {type === QuestionType.MultipleChoice ? (
+          {type === QuestionInputType.MultipleChoice ? (
             <div className="w-3.5 h-3.5 shrink-0 rounded-full border-2 border-primary" />
           ) : (
             <div className="w-3.5 h-3.5 shrink-0 rounded-sm border-2 border-text-muted" />

@@ -1,4 +1,4 @@
-enum QuestionType {
+enum QuestionInputType {
   TEXT
   MULTIPLE_CHOICE
   CHECKBOX
@@ -8,7 +8,7 @@ enum QuestionType {
 type Question {
   id: ID!
   text: String!
-  type: QuestionType!
+  type: QuestionInputType!
   required: Boolean!
   options: [String!]
 }
@@ -36,7 +36,7 @@ type Response {
 
 input QuestionInput {
   text: String!
-  type: QuestionType!
+  type: QuestionInputType!
   required: Boolean
   options: [String!]
 }

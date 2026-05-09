@@ -1,5 +1,5 @@
 import type { ComponentType } from 'react';
-import { QuestionType } from 'shared';
+import { QuestionInputType } from 'shared';
 import type { GetFormQuery } from 'shared';
 import { Input } from '@/shared/ui/Input';
 import { RadioGroup } from '@/shared/ui/RadioGroup';
@@ -16,8 +16,8 @@ interface QuestionInputProps {
   onCheckboxToggle: (questionId: string, option: string) => void;
 }
 
-const QUESTION_INPUT_BY_TYPE: Record<QuestionType, ComponentType<QuestionInputProps>> = {
-  [QuestionType.Text]: ({ id, answer, error, onTextChange }) => (
+const QUESTION_INPUT_BY_TYPE: Record<QuestionInputType, ComponentType<QuestionInputProps>> = {
+  [QuestionInputType.Text]: ({ id, answer, error, onTextChange }) => (
     <Input
       type="text"
       value={(answer as string) ?? ''}
@@ -26,7 +26,7 @@ const QUESTION_INPUT_BY_TYPE: Record<QuestionType, ComponentType<QuestionInputPr
       error={error}
     />
   ),
-  [QuestionType.Date]: ({ id, answer, error, onTextChange }) => (
+  [QuestionInputType.Date]: ({ id, answer, error, onTextChange }) => (
     <Input
       type="date"
       value={(answer as string) ?? ''}
@@ -34,7 +34,7 @@ const QUESTION_INPUT_BY_TYPE: Record<QuestionType, ComponentType<QuestionInputPr
       error={error}
     />
   ),
-  [QuestionType.MultipleChoice]: ({ id, answer, options, error, onTextChange }) => (
+  [QuestionInputType.MultipleChoice]: ({ id, answer, options, error, onTextChange }) => (
     <RadioGroup
       name={id}
       options={options ?? []}
@@ -43,7 +43,7 @@ const QUESTION_INPUT_BY_TYPE: Record<QuestionType, ComponentType<QuestionInputPr
       error={error}
     />
   ),
-  [QuestionType.Checkbox]: ({ id, answer, options, error, onCheckboxToggle }) => (
+  [QuestionInputType.Checkbox]: ({ id, answer, options, error, onCheckboxToggle }) => (
     <CheckboxGroup
       options={options ?? []}
       value={(answer as string[]) ?? []}

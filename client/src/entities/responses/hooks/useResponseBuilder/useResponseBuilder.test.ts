@@ -1,25 +1,25 @@
 import { renderHook, act } from '@testing-library/react';
 import { useResponseBuilder } from './useResponseBuilder';
-import { QuestionType } from 'shared';
-import type { QuestionFieldsFragment } from 'shared';
+import { QuestionInputType } from 'shared';
+import type { Question } from 'shared';
 import type { useGetFormQuery as UseGetFormQuery } from '@/app/api';
 
 const mockSubmitResponse = vi.fn();
 
-const makeQuestion = (overrides: Partial<QuestionFieldsFragment> = {}): QuestionFieldsFragment => ({
+const makeQuestion = (overrides: Partial<Question> = {}): Question => ({
   id: 'q-1',
   text: 'Question?',
-  type: QuestionType.Text,
+  type: QuestionInputType.Text,
   required: false,
   options: [],
   ...overrides,
 });
 
-const makeForm = (questions: QuestionFieldsFragment[] = []) => ({
+const makeForm = (questions: Question[] = []) => ({
   form: { id: 'form-1', title: 'Test Form', description: '', createdAt: '', questions },
 });
 
-const mockQueryResult = (questions: QuestionFieldsFragment[] = []) =>
+const mockQueryResult = (questions: Question[] = []) =>
   ({
     data: makeForm(questions),
     isLoading: false,

@@ -21,7 +21,9 @@ export const responsesService = {
       });
     }
 
-    const questionMap = Object.fromEntries(form.questions.map((q) => [q.id, q]));
+    const questionMap = Object.fromEntries(
+      form.questions.map((question) => [question.id, question])
+    );
 
     const response: Response = {
       id: crypto.randomUUID(),

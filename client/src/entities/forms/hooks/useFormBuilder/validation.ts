@@ -1,15 +1,14 @@
-import type { QuestionFieldsFragment } from 'shared';
-import { QuestionType } from 'shared';
+import { QuestionInputType, type Question } from 'shared';
 
 export type DraftOption = { id: string; value: string };
-export type DraftQuestion = Omit<QuestionFieldsFragment, 'options'> & { options: DraftOption[] };
+export type DraftQuestion = Omit<Question, 'options'> & { options: DraftOption[] };
 
 export const MIN_OPTIONS_COUNT = 2;
 export const MAX_TITLE_LENGTH = 100;
 export const MAX_QUESTION_TEXT_LENGTH = 300;
 
-export const needsOptions = (type: QuestionType) =>
-  type === QuestionType.MultipleChoice || type === QuestionType.Checkbox;
+export const needsOptions = (type: QuestionInputType) =>
+  type === QuestionInputType.MultipleChoice || type === QuestionInputType.Checkbox;
 
 const FORM_RULES: Array<{
   field: string;

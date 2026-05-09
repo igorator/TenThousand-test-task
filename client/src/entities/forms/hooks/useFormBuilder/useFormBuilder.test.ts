@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import { useFormBuilder } from './useFormBuilder';
-import { QuestionType } from 'shared';
+import { QuestionInputType } from 'shared';
 
 const mockNavigate = vi.fn();
 const mockCreateForm = vi.fn();
@@ -33,18 +33,18 @@ describe('useFormBuilder', () => {
     const { result } = renderHook(() => useFormBuilder());
 
     act(() => {
-      result.current.addQuestion(QuestionType.Text);
+      result.current.addQuestion(QuestionInputType.Text);
     });
 
     expect(result.current.questions).toHaveLength(1);
-    expect(result.current.questions[0].type).toBe(QuestionType.Text);
+    expect(result.current.questions[0].type).toBe(QuestionInputType.Text);
   });
 
   it('should remove a question', () => {
     const { result } = renderHook(() => useFormBuilder());
 
     act(() => {
-      result.current.addQuestion(QuestionType.Text);
+      result.current.addQuestion(QuestionInputType.Text);
     });
 
     const id = result.current.questions[0].id;

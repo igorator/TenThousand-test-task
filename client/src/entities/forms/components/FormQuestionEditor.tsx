@@ -1,12 +1,12 @@
-import { QuestionType } from 'shared';
-import { QUESTION_TYPE_LABELS } from '@/entities/forms/config/questionTypes';
+import { QuestionInputType } from 'shared';
+import { QUESTION_INPUT_TYPE_LABELS } from '@/entities/forms/config/questionInputTypes';
 import type { DraftQuestion } from '@/entities/forms/hooks/useFormBuilder';
 import { Input } from '@/shared/ui/Input';
 import { Select } from '@/shared/ui/Select';
 import { OptionsList } from './OptionsList';
 
-const needsOptions = (type: QuestionType) =>
-  type === QuestionType.MultipleChoice || type === QuestionType.Checkbox;
+const needsOptions = (type: QuestionInputType) =>
+  type === QuestionInputType.MultipleChoice || type === QuestionInputType.Checkbox;
 
 export interface FormQuestionEditorProps {
   question: DraftQuestion;
@@ -33,14 +33,14 @@ export function FormQuestionEditor({
 
   return (
     <div className="card">
-      <div className="flex items-start justify-between gap-3 mb-4">
-        <span className="text-xs font-semibold text-primary bg-primary-muted rounded px-2 py-1">
+      <div className="flex justify-between items-start gap-3 mb-4">
+        <span className="bg-primary-muted px-2 py-1 rounded font-semibold text-primary text-xs">
           Question {index + 1}
         </span>
         <button
           type="button"
           onClick={() => onRemove(id)}
-          className="text-text-muted hover:text-error transition-colors text-sm"
+          className="text-text-muted hover:text-error text-sm transition-colors"
           aria-label="Remove question"
         >
           ✕
@@ -58,16 +58,16 @@ export function FormQuestionEditor({
         <div className="flex items-center gap-3 mt-2">
           <Select
             value={type}
-            onChange={(event) => onUpdate(id, { type: event.target.value as QuestionType })}
+            onChange={(event) => onUpdate(id, { type: event.target.value as QuestionInputType })}
           >
-            {Object.values(QuestionType).map((questionType) => (
+            {Object.values(QuestionInputType).map((questionType) => (
               <option key={questionType} value={questionType}>
-                {QUESTION_TYPE_LABELS[questionType]}
+                {QUESTION_INPUT_TYPE_LABELS[questionType]}
               </option>
             ))}
           </Select>
 
-          <label className="flex items-center gap-2 text-sm text-text-muted cursor-pointer select-none">
+          <label className="flex items-center gap-2 text-text-muted text-sm cursor-pointer select-none">
             <input
               type="checkbox"
               checked={required}

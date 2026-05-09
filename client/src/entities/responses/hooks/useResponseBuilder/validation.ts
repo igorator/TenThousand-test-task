@@ -1,22 +1,24 @@
-import type { QuestionFieldsFragment } from 'shared';
-import { QuestionType } from 'shared';
+import { QuestionInputType, type Question } from 'shared';
 
-export const needsMultipleValues = (type: QuestionType) => type === QuestionType.Checkbox;
+export const needsMultipleValues = (type: QuestionInputType) => type === QuestionInputType.Checkbox;
 
 export const MAX_TEXT_ANSWER_LENGTH = 1000;
 
-const TEXT_ANSWER_TYPES = new Set<QuestionType>([QuestionType.Text, QuestionType.Date]);
+const TEXT_ANSWER_TYPES = new Set<QuestionInputType>([
+  QuestionInputType.Text,
+  QuestionInputType.Date,
+]);
 
 type AnswerChecker = (answer: string | string[] | undefined) => boolean;
 
-const ANSWER_CHECKERS: Partial<Record<QuestionType, AnswerChecker>> = {
-  [QuestionType.Checkbox]: (answer) => Array.isArray(answer) && answer.length > 0,
+const ANSWER_CHECKERS: Partial<Record<QuestionInputType, AnswerChecker>> = {
+  [QuestionInputType.Checkbox]: (answer) => Array.isArray(answer) && answer.length > 0,
 };
 
 const defaultAnswerChecker: AnswerChecker = (answer) => !!answer && !!(answer as string).trim();
 
 export const validateAnswers = (
-  questions: QuestionFieldsFragment[],
+  questions: Question[],
   answers: Record<string, string | string[]>
 ): Record<string, string> => {
   const errors: Record<string, string> = {};
@@ -32,7 +34,7 @@ export const validateAnswers = (
       }
     }
 
-    if (TEXT_ANSWER_TYPES.has(question.type as QuestionType) && answer) {
+    if (TEXT_ANSWER_TYPES.has(question.type as QuestionInputType) && answer) {
       if ((answer as string).length > MAX_TEXT_ANSWER_LENGTH) {
         errors[question.id] = `Answer must be ${MAX_TEXT_ANSWER_LENGTH} characters or less.`;
       }

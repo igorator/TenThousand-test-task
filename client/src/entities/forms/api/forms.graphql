@@ -1,21 +1,3 @@
-fragment QuestionFields on Question {
-  id
-  text
-  type
-  required
-  options
-}
-
-fragment FormFields on Form {
-  id
-  title
-  description
-  createdAt
-  questions {
-    ...QuestionFields
-  }
-}
-
 query GetForms {
   forms {
     id
@@ -27,12 +9,32 @@ query GetForms {
 
 query GetForm($id: ID!) {
   form(id: $id) {
-    ...FormFields
+    id
+    title
+    description
+    createdAt
+    questions {
+      id
+      text
+      type
+      required
+      options
+    }
   }
 }
 
 mutation CreateForm($title: String!, $description: String, $questions: [QuestionInput!]) {
   createForm(title: $title, description: $description, questions: $questions) {
-    ...FormFields
+    id
+    title
+    description
+    createdAt
+    questions {
+      id
+      text
+      type
+      required
+      options
+    }
   }
 }

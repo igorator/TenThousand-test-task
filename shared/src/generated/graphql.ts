@@ -70,17 +70,17 @@ export type Question = {
   options?: Maybe<Array<Scalars['String']['output']>>;
   required: Scalars['Boolean']['output'];
   text: Scalars['String']['output'];
-  type: QuestionType;
+  type: QuestionInputType;
 };
 
 export type QuestionInput = {
   options?: InputMaybe<Array<Scalars['String']['input']>>;
   required?: InputMaybe<Scalars['Boolean']['input']>;
   text: Scalars['String']['input'];
-  type: QuestionType;
+  type: QuestionInputType;
 };
 
-export enum QuestionType {
+export enum QuestionInputType {
   Checkbox = 'CHECKBOX',
   Date = 'DATE',
   MultipleChoice = 'MULTIPLE_CHOICE',
@@ -176,7 +176,7 @@ export type ResolversTypes = {
   Query: ResolverTypeWrapper<Record<PropertyKey, never>>;
   Question: ResolverTypeWrapper<Question>;
   QuestionInput: QuestionInput;
-  QuestionType: QuestionType;
+  QuestionInputType: QuestionInputType;
   Response: ResolverTypeWrapper<Response>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
 };
@@ -226,7 +226,7 @@ export type QuestionResolvers<ContextType = any, ParentType extends ResolversPar
   options?: Resolver<Maybe<Array<ResolversTypes['String']>>, ParentType, ContextType>;
   required?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   text?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  type?: Resolver<ResolversTypes['QuestionType'], ParentType, ContextType>;
+  type?: Resolver<ResolversTypes['QuestionInputType'], ParentType, ContextType>;
 };
 
 export type ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['Response'] = ResolversParentTypes['Response']> = {

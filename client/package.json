@@ -7,18 +7,18 @@
     "dev": "vite --mode dev",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-"test": "vitest",
+    "test": "vitest",
     "test:ci": "vitest run"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.11.2",
-    "shared": "*",
     "graphql": "^16.14.0",
     "graphql-request": "^7.4.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-redux": "^9.2.0",
-    "react-router": "^7.15.0"
+    "react-router": "^7.15.0",
+    "shared": "*"
   },
   "devDependencies": {
     "@rolldown/plugin-babel": "^0.2.3",

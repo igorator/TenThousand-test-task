@@ -8,12 +8,12 @@ export const formsService = {
   getById: (id: string): Form | null => formsStore.findById(id),
 
   create: ({ title, description, questions: inputs }: MutationCreateFormArgs): Form => {
-    const questions: Question[] = (inputs ?? []).map((q) => ({
+    const questions: Question[] = (inputs ?? []).map((input) => ({
       id: crypto.randomUUID(),
-      text: q.text,
-      type: q.type,
-      required: q.required ?? false,
-      options: q.options,
+      text: input.text,
+      type: input.type,
+      required: input.required ?? false,
+      options: input.options,
     }));
 
     const form: Form = {

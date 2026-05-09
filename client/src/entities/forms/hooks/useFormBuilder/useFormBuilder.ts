@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useCreateFormMutation } from '@/app/api';
 import type { QuestionInput } from 'shared';
-import { QuestionType } from 'shared';
+import { QuestionInputType } from 'shared';
 import { ROUTES } from '@/shared/config/routes';
 import { needsOptions, validateFormDraft } from './validation';
 import type { DraftQuestion } from './validation';
@@ -23,7 +23,7 @@ export function useFormBuilder() {
   const [questions, setQuestions] = useState<DraftQuestion[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const addQuestion = (type: QuestionType) => {
+  const addQuestion = (type: QuestionInputType) => {
     setQuestions((prev) => [
       ...prev,
       {
